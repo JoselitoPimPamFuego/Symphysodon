@@ -183,7 +183,7 @@ enum Value : int {
   VALUE_MATE_IN_MAX_PLY  =  VALUE_MATE - 2 * MAX_PLY,
   VALUE_MATED_IN_MAX_PLY = -VALUE_MATE + 2 * MAX_PLY,
 
-  PawnValueMg   = 188,   PawnValueEg   = 248,
+  PawnValueMg   = 171,   PawnValueEg   = 240,
   KnightValueMg = 764,   KnightValueEg = 848,
   BishopValueMg = 826,   BishopValueEg = 891,
   RookValueMg   = 1282,  RookValueEg   = 1373,
@@ -419,6 +419,10 @@ inline Square from_sq(Move m) {
 
 inline Square to_sq(Move m) {
   return Square(m & 0x3F);
+}
+
+inline int from_to(Move m) {
+ return m & 0xFFF;
 }
 
 inline MoveType type_of(Move m) {

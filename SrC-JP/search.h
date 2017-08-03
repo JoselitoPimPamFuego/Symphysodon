@@ -21,7 +21,6 @@
 #ifndef SEARCH_H_INCLUDED
 #define SEARCH_H_INCLUDED
 
-#include <atomic>
 #include <vector>
 
 #include "misc.h"
@@ -38,13 +37,13 @@ namespace Search {
 
 struct Stack {
   Move* pv;
-  CounterMoveStats* counterMoves;
+  PieceToHistory* history;
   int ply;
   Move currentMove;
   Move excludedMove;
   Move killers[2];
   Value staticEval;
-  int history;
+  int statScore;
   int moveCount;
 };
 
@@ -65,6 +64,7 @@ struct RootMove {
 
   Value score = -VALUE_INFINITE;
   Value previousScore = -VALUE_INFINITE;
+  int selDepth = 0;
   std::vector<Move> pv;
 };
 
@@ -92,15 +92,6 @@ struct LimitsType {
   TimePoint startTime;
 };
 
-
-/// SignalsType struct stores atomic flags updated during the search, typically
-/// in an async fashion e.g. to stop the search by the GUI.
-
-struct SignalsType {
-  std::atomic_bool stop, stopOnPonderhit;
-};
-
-extern SignalsType Signals;
 extern LimitsType Limits;
 
 void init();
